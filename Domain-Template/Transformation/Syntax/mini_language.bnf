@@ -1,0 +1,39 @@
+USE_LR_PARSER
+
+Program
+
+(* ======================================================================================================= *)
+
+<Program>           ::= <StatementList>                                                 .
+<StatementList>     ::= <Statement> <StatementList> | <epsilon>                         .
+<Statement>         ::= <Declaration> ";" | <Assignment> ";" | <PrintSt> ";" | <Block> 
+                      | <ForLoop> | <CondStatement> | <WhileLoop>  | <Increment> ";"    .
+<Declaration>       ::= "INT" <id> | "BOOL" <id>                                        .
+<Assignment>        ::= <id> "=" <Expr> | <Increment>                                   .
+<PrintSt>           ::= "print" "(" <Expr> ")"                                          .
+<Block>             ::= "{" <StatementList> "}"                                         .
+<CondStatement>     ::= "if" "(" <Expr> ")" "then" <Block> 
+                      | "if" "(" <Expr> ")" "then" <Block> "else" <Block>               .
+<WhileLoop>         ::= "while" "(" <Expr> ")" <Block>                                  .
+<ForLoop>           ::= "for" "(" <Assignment> ";" <Expr> ";" <Increment> ")" <Block>   .
+<Increment>         ::= "++" <id> | <id> "++" | "--" <id> | <id> "--"                   .
+<Expr>              ::= <Expr> "||" <AndExpr> | <AndExpr>                               .
+<AndExpr>           ::= <AndExpr> "&&" <EqualityExpr> | <EqualityExpr>                  .
+<EqualityExpr>      ::= <EqualityExpr> "!=" <ComparisonExpr> 
+                      | <EqualityExpr> "==" <ComparisonExpr> | <ComparisonExpr>         .
+<ComparisonExpr>    ::= <ComparisonExpr> "<" <AddSubExpr> 
+                      | <ComparisonExpr> “>” <AddSubExpr> 
+                      | <AddSubExpr>                                                    .
+<AddSubExpr>        ::= <AddSubExpr> "+" <MultDivModExpr> 
+                      | <AddSubExpr> "-" <MultDivModExpr> 
+                      | <MultDivModExpr>                                                .
+<MultDivModExpr>    ::= <MultDivModExpr> "*" <UnaryExpr> 
+                      | <MultDivModExpr> "DIV" <UnaryExpr> 
+                      | <MultDivModExpr> "MOD" <UnaryExpr> | <UnaryExpr>                .
+<UnaryExpr>         ::= "!" <UnaryExpr> | "-" <ExpExpr> | <ExpExpr>                     .
+<ExpExpr>           ::= <BaseExpr> "^" <ExpExpr> | <BaseExpr>                           .
+<BaseExpr>          ::= <Increment> | "(" <Expr> ")" | "|" <Expr> "|" 
+                      | <id> | <integer> | <bool>                                       .
+<id>                ::= id                                                              .
+<integer>           ::= integer                                                         .
+<bool>              ::= bool                                                            .
